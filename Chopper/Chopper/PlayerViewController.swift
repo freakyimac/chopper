@@ -22,7 +22,6 @@ final class PlayerViewController: UIViewController {
     
     private let imageViewArtwrok: UIImageView = {
         let imageView = UIImageView(image: UIImage(named: "blur_test_image"))
-        imageView.backgroundColor = .red
         imageView.layer.cornerRadius = 10
         imageView.layer.masksToBounds = true
         imageView.contentMode = .scaleAspectFill
@@ -47,12 +46,12 @@ final class PlayerViewController: UIViewController {
     
     private let containerViewSliderProgress: UIView = {
         let view = UIView()
-        view.backgroundColor = .black
         return view
     }()
     
     private let sliderProgress: UISlider = {
         let slider = UISlider()
+        slider.setThumbImage(UIImage(), for: .normal)
         return slider
     }()
     
@@ -74,37 +73,49 @@ final class PlayerViewController: UIViewController {
     
     private let containerViewControlButtons: UIView = {
         let view = UIView()
-        view.backgroundColor = .blue
         return view
+    }()
+    
+    private let buttonPrev: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: "button_prev_track")?.withTintColor(.white), for: .normal)
+        return button
     }()
     
     private let buttonPlayPause: UIButton = {
         let button = UIButton()
-        button.setImage(UIImage(named: "button_play_track"), for: .normal)
-        button.backgroundColor = .systemPink
+        button.setImage(UIImage(named: "button_play_track")?.withTintColor(.white), for: .normal)
+        return button
+    }()
+    
+    private let buttonNext: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: "button_next_track")?.withTintColor(.white), for: .normal)
         return button
     }()
     
     private let containerViewSliderVolume: UIView = {
         let view = UIView()
-        view.backgroundColor = .black
         return view
     }()
     
     private let imageViewMinVolume: UIImageView = {
         let imageView = UIImageView()
-        imageView.backgroundColor = .blue
+        imageView.image = UIImage(named: "button_volume_min")?.withTintColor(.lightText)
+        imageView.contentMode = .scaleAspectFill
         return imageView
     }()
     
     private let imageViewMaxVolume: UIImageView = {
         let imageView = UIImageView()
-        imageView.backgroundColor = .blue
+        imageView.image = UIImage(named: "button_volume_max")?.withTintColor(.lightText)
+        imageView.contentMode = .scaleAspectFill
         return imageView
     }()
     
     private let sliderVolume: UISlider = {
         let slider = UISlider()
+        slider.setThumbImage(UIImage(), for: .normal)
         return slider
     }()
     
@@ -112,7 +123,6 @@ final class PlayerViewController: UIViewController {
         let stackView = UIStackView()
         stackView.axis = .vertical
         stackView.spacing = 0
-        stackView.backgroundColor = .white
         stackView.distribution = .fill
         stackView.addArrangedSubview(containerViewSliderProgress)
         stackView.addArrangedSubview(containerViewControlButtons)
@@ -155,37 +165,51 @@ final class PlayerViewController: UIViewController {
             make.height.equalTo(30)
         }
         containerViewSliderProgress.snp.makeConstraints { make in
-            make.height.equalTo(60)
+            make.height.equalTo(50)
         }
         containerViewSliderProgress.addSubview(sliderProgress)
+        containerViewSliderProgress.addSubview(labelCurrentTime)
+        containerViewSliderProgress.addSubview(labelTotalTime)
         sliderProgress.snp.makeConstraints { make in
             make.top.leading.trailing.equalToSuperview()
         }
-        containerViewSliderProgress.addSubview(labelCurrentTime)
-        containerViewSliderProgress.addSubview(labelTotalTime)
         labelCurrentTime.snp.makeConstraints { make in
-            make.top.equalTo(sliderProgress.snp.bottom).offset(5)
+            make.top.equalTo(sliderProgress.snp.bottom)
             make.leading.equalToSuperview()
             make.bottom.equalToSuperview()
+            make.height.equalTo(18)
         }
         labelTotalTime.snp.makeConstraints { make in
-            make.top.equalTo(sliderProgress.snp.bottom).offset(5)
+            make.top.equalTo(sliderProgress.snp.bottom)
             make.trailing.equalToSuperview()
             make.bottom.equalToSuperview()
+            make.height.equalTo(18)
         }
         containerViewControlButtons.snp.makeConstraints { make in
             make.height.greaterThanOrEqualTo(50)
         }
         containerViewControlButtons.addSubview(buttonPlayPause)
+        containerViewControlButtons.addSubview(buttonPrev)
+        containerViewControlButtons.addSubview(buttonNext)
+        buttonPrev.snp.makeConstraints { make in
+            make.leading.equalToSuperview().inset(commonPaddingHorizontal)
+            make.centerY.equalToSuperview()
+            make.width.height.equalTo(50)
+        }
         buttonPlayPause.snp.makeConstraints { make in
             make.centerX.centerY.equalToSuperview()
             make.width.height.equalTo(50)
         }
+        buttonNext.snp.makeConstraints { make in
+            make.trailing.equalToSuperview().inset(commonPaddingHorizontal)
+            make.centerY.equalToSuperview()
+            make.width.height.equalTo(50)
+        }
         view.addSubview(stackViewControlPlate)
         stackViewControlPlate.snp.makeConstraints { make in
-            make.top.equalTo(labelSubTitle.snp.bottom).offset(20)
+            make.top.equalTo(labelSubTitle.snp.bottom).offset(10)
             make.leading.trailing.equalToSuperview().inset(commonPaddingHorizontal)
-            make.bottom.equalTo(view.safeAreaLayoutGuide)
+            make.bottom.equalTo(view.safeAreaLayoutGuide).inset(10)
         }
         containerViewSliderVolume.addSubview(sliderVolume)
         containerViewSliderVolume.addSubview(imageViewMinVolume)
