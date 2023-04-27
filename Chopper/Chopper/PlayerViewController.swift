@@ -20,6 +20,11 @@ final class PlayerViewController: UIViewController {
         return imageView
     }()
     
+    private let containerViewArtwork: UIView = {
+        let view = UIView()
+        return view
+    }()
+    
     private let imageViewArtwrok: UIImageView = {
         let imageView = UIImageView(image: UIImage(named: "blur_test_image"))
         imageView.layer.cornerRadius = 10
@@ -82,9 +87,11 @@ final class PlayerViewController: UIViewController {
         return button
     }()
     
-    private let buttonPlayPause: UIButton = {
+    private lazy var buttonPlayPause: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(named: "button_play_track")?.withTintColor(.white), for: .normal)
+        button.setImage(UIImage(named: "button_pause_track")?.withTintColor(.white), for: .selected)
+        button.addTarget(self, action: #selector(didTapPlayPauseButton), for: .touchUpInside)
         return button
     }()
     
@@ -131,7 +138,9 @@ final class PlayerViewController: UIViewController {
     }()
     
     // MARK: - Properties
+    private let viewModel = PlayerViewModel()
     private let commonPaddingHorizontal: CGFloat = 15
+    private let commonPaddingArtwork: CGFloat = 30
     
     // MARK: - Overrides
     override func viewDidLoad() {
@@ -146,16 +155,20 @@ final class PlayerViewController: UIViewController {
         imageViewRoot.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
-        view.addSubview(imageViewArtwrok)
-        imageViewArtwrok.snp.makeConstraints { make in
+        view.addSubview(containerViewArtwork)
+        containerViewArtwork.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top).inset(20)
             make.leading.trailing.equalToSuperview().inset(commonPaddingHorizontal)
             make.width.height.equalTo(view.frame.width - (commonPaddingHorizontal * 2))
         }
+        containerViewArtwork.addSubview(imageViewArtwrok)
+        imageViewArtwrok.snp.makeConstraints { make in
+            make.edges.equalToSuperview().inset(commonPaddingArtwork)
+        }
         view.addSubview(labelTitle)
         view.addSubview(labelSubTitle)
         labelTitle.snp.makeConstraints { make in
-            make.top.equalTo(imageViewArtwrok.snp.bottom).offset(20)
+            make.top.equalTo(containerViewArtwork.snp.bottom).offset(20)
             make.leading.trailing.equalToSuperview().inset(commonPaddingHorizontal)
             make.height.equalTo(30)
         }
@@ -231,6 +244,17 @@ final class PlayerViewController: UIViewController {
         }
         containerViewSliderVolume.snp.makeConstraints { make in
             make.height.equalTo(50)
+        }
+    }
+    
+    @objc private func didTapPlayPauseButton() {
+        viewModel.isPlaying.toggle()
+        buttonPlayPause.isSelected = viewModel.isPlaying
+        UIView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: []) {
+            self.imageViewArtwrok.snp.updateConstraints { make in
+                make.edges.equalToSuperview().inset(self.viewModel.isPlaying ? 0 : self.commonPaddingArtwork)
+            }
+            self.view.layoutIfNeeded()
         }
     }
 }

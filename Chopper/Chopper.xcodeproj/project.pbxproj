@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DF3D22F729FAC0AA005CF835 /* PlayerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF3D22F629FAC0AA005CF835 /* PlayerViewModel.swift */; };
 		DF50B00A29F6CB8C0021DF78 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF50B00929F6CB8C0021DF78 /* AppDelegate.swift */; };
 		DF50B00E29F6CB8C0021DF78 /* PlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF50B00D29F6CB8C0021DF78 /* PlayerViewController.swift */; };
 		DF50B01329F6CB8D0021DF78 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DF50B01229F6CB8D0021DF78 /* Assets.xcassets */; };
@@ -15,6 +16,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		DF3D22F629FAC0AA005CF835 /* PlayerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerViewModel.swift; sourceTree = "<group>"; };
 		DF50B00629F6CB8C0021DF78 /* Chopper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Chopper.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DF50B00929F6CB8C0021DF78 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DF50B00D29F6CB8C0021DF78 /* PlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerViewController.swift; sourceTree = "<group>"; };
@@ -56,6 +58,7 @@
 			children = (
 				DF50B00929F6CB8C0021DF78 /* AppDelegate.swift */,
 				DF50B00D29F6CB8C0021DF78 /* PlayerViewController.swift */,
+				DF3D22F629FAC0AA005CF835 /* PlayerViewModel.swift */,
 				DF50B01229F6CB8D0021DF78 /* Assets.xcassets */,
 				DF50B01429F6CB8D0021DF78 /* LaunchScreen.storyboard */,
 				DF50B01729F6CB8D0021DF78 /* Info.plist */,
@@ -139,6 +142,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DF3D22F729FAC0AA005CF835 /* PlayerViewModel.swift in Sources */,
 				DF50B00E29F6CB8C0021DF78 /* PlayerViewController.swift in Sources */,
 				DF50B00A29F6CB8C0021DF78 /* AppDelegate.swift in Sources */,
 			);
