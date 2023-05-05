@@ -120,9 +120,13 @@ final class PlayerViewController: UIViewController {
         return imageView
     }()
     
-    private let sliderVolume: UISlider = {
+    private lazy var sliderVolume: UISlider = {
         let slider = UISlider()
         slider.setThumbImage(UIImage(), for: .normal)
+        slider.minimumValue = 0
+        slider.maximumValue = 1
+        slider.value = PlayerManager.shared.currentVolume
+        slider.addTarget(self, action: #selector(valueChangeSlider(sender:)), for: .valueChanged)
         return slider
     }()
     
@@ -146,6 +150,8 @@ final class PlayerViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
+        PlayerManager.shared.delegate = self
+        // MARK: - TEST
         let tmpUrl = "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-10.mp3"
         PlayerManager.shared.setPlayerItem(url: tmpUrl)
     }
@@ -248,7 +254,10 @@ final class PlayerViewController: UIViewController {
             make.height.equalTo(50)
         }
     }
-    
+}
+
+// MARK: - Play
+extension PlayerViewController {
     @objc private func didTapPlayPauseButton() {
         PlayerManager.shared.playOrPause()
         viewModel.isPlaying.toggle()
@@ -259,5 +268,16 @@ final class PlayerViewController: UIViewController {
             }
             self.view.layoutIfNeeded()
         }
+    }
+}
+
+// MARK: - Volume
+extension PlayerViewController: PlayerManagerDelegate {
+    func deviceVolumeButttonTapped() {
+        sliderVolume.setValue(PlayerManager.shared.currentVolume, animated: true)
+    }
+    
+    @objc private func valueChangeSlider(sender: UISlider) {
+        PlayerManager.shared.setVolume(sender.value)
     }
 }
