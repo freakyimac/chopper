@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import AVFoundation
 
 final class PlayerViewController: UIViewController {
 
@@ -142,14 +141,13 @@ final class PlayerViewController: UIViewController {
     private let viewModel = PlayerViewModel()
     private let commonPaddingHorizontal: CGFloat = 15
     private let commonPaddingArtwork: CGFloat = 30
-    private let player = AVPlayer()
-    private var playerItem: AVPlayerItem?
     
     // MARK: - Overrides
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
-        setPlayer()
+        let tmpUrl = "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-10.mp3"
+        PlayerManager.shared.setPlayerItem(url: tmpUrl)
     }
 
     // MARK: - Functions
@@ -252,7 +250,7 @@ final class PlayerViewController: UIViewController {
     }
     
     @objc private func didTapPlayPauseButton() {
-        updatePlayerStatus()
+        PlayerManager.shared.playOrPause()
         viewModel.isPlaying.toggle()
         buttonPlayPause.isSelected = viewModel.isPlaying
         UIView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: []) {
@@ -260,25 +258,6 @@ final class PlayerViewController: UIViewController {
                 make.edges.equalToSuperview().inset(self.viewModel.isPlaying ? 0 : self.commonPaddingArtwork)
             }
             self.view.layoutIfNeeded()
-        }
-    }
-}
-
-// MARK: - Player
-extension PlayerViewController {
-    private func setPlayer() {
-        guard let url = URL(string: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-10.mp3") else {
-            return
-        }
-        playerItem = AVPlayerItem(url: url)
-        player.replaceCurrentItem(with: playerItem)
-    }
-    
-    private func updatePlayerStatus() {
-        if player.timeControlStatus == .paused {
-            player.play()
-        } else {
-            player.pause()
         }
     }
 }
