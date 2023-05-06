@@ -20,6 +20,7 @@ final class PlayerManager {
     private let player = AVPlayer()
     private var outputVolumeObserve: NSKeyValueObservation?
     var currentVolume: Float { AVAudioSession.sharedInstance().outputVolume }
+    var isSliderVolumeMoving: Bool = false
     weak var delegate: PlayerManagerDelegate?
     
     private init() {
@@ -55,8 +56,11 @@ final class PlayerManager {
             print("AVAudioSession set active fail")
         }
         outputVolumeObserve = AVAudioSession.sharedInstance().observe(\.outputVolume) { [weak self] (audioSession, changes) in
-            self?.player.volume = audioSession.outputVolume
-            self?.delegate?.deviceVolumeButttonTapped()
+            guard let self = self, !self.isSliderVolumeMoving else {
+                return
+            }
+            self.player.volume = audioSession.outputVolume
+            self.delegate?.deviceVolumeButttonTapped()
         }
     }
 }

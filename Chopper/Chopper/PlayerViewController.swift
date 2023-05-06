@@ -126,7 +126,7 @@ final class PlayerViewController: UIViewController {
         slider.minimumValue = 0
         slider.maximumValue = 1
         slider.value = PlayerManager.shared.currentVolume
-        slider.addTarget(self, action: #selector(valueChangeSlider(sender:)), for: .valueChanged)
+        slider.addTarget(self, action: #selector(valueChangeSlider(sender:event:)), for: .valueChanged)
         return slider
     }()
     
@@ -277,7 +277,16 @@ extension PlayerViewController: PlayerManagerDelegate {
         sliderVolume.setValue(PlayerManager.shared.currentVolume, animated: true)
     }
     
-    @objc private func valueChangeSlider(sender: UISlider) {
-        PlayerManager.shared.setVolume(sender.value)
+    @objc private func valueChangeSlider(sender: UISlider, event: UIEvent) {
+        if let touchEvent = event.allTouches?.first {
+            switch touchEvent.phase {
+            case .began:
+                PlayerManager.shared.isSliderVolumeMoving = true
+            case .moved:
+                PlayerManager.shared.setVolume(sender.value)
+            default:
+                PlayerManager.shared.isSliderVolumeMoving = false
+            }
+        }
     }
 }
