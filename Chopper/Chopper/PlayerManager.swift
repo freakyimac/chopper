@@ -18,8 +18,9 @@ final class PlayerManager {
     // MARK: - Properties
     static let shared = PlayerManager()
     private let player = AVPlayer()
+    private let audioSession = AVAudioSession.sharedInstance()
     private var outputVolumeObserve: NSKeyValueObservation?
-    var currentVolume: Float { AVAudioSession.sharedInstance().outputVolume }
+    var currentVolume: Float { audioSession.outputVolume }
     var isSliderVolumeMoving: Bool = false
     weak var delegate: PlayerManagerDelegate?
     
@@ -51,11 +52,12 @@ final class PlayerManager {
 
     private func listenVolumeButton() {
         do {
-            try AVAudioSession.sharedInstance().setActive(true)
+            try audioSession.setCategory(AVAudioSession.Category.playback)
+            try audioSession.setActive(true)
         } catch {
             print("AVAudioSession set active fail")
         }
-        outputVolumeObserve = AVAudioSession.sharedInstance().observe(\.outputVolume) { [weak self] (audioSession, changes) in
+        outputVolumeObserve = audioSession.observe(\.outputVolume) { [weak self] (audioSession, changes) in
             guard let self = self, !self.isSliderVolumeMoving else {
                 return
             }
