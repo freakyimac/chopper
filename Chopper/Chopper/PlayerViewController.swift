@@ -6,8 +6,9 @@
 //
 
 import UIKit
+import AVFoundation
 
-final class PlayerViewController: UIViewController {
+final class PlayerViewController: UIViewController, PlayerManagerDelegate {
 
     // MARK: - Views
     private lazy var imageViewRoot: UIView = {
@@ -272,7 +273,7 @@ extension PlayerViewController {
 }
 
 // MARK: - Volume
-extension PlayerViewController: PlayerManagerDelegate {
+extension PlayerViewController {
     func deviceVolumeButttonTapped() {
         sliderVolume.setValue(PlayerManager.shared.currentVolume, animated: true)
     }
@@ -288,5 +289,12 @@ extension PlayerViewController: PlayerManagerDelegate {
                 PlayerManager.shared.isSliderVolumeMoving = false
             }
         }
+    }
+}
+
+// MARK: - Time
+extension PlayerViewController {
+    func playerTimeDidChange(_ percentage: Float) {
+        sliderProgress.value = percentage
     }
 }

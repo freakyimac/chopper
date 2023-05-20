@@ -11,6 +11,7 @@ import MediaPlayer
 
 protocol PlayerManagerDelegate: AnyObject {
     func deviceVolumeButttonTapped()
+    func playerTimeDidChange(_ percentage: Float)
 }
 
 final class PlayerManager {
@@ -22,6 +23,11 @@ final class PlayerManager {
     private var outputVolumeObserve: NSKeyValueObservation?
     private var timeObserver: Any?
     var currentVolume: Float { audioSession.outputVolume }
+    var currentItemDuration: Float64 {
+        CMTimeGetSeconds(
+            player.currentItem?.duration ?? CMTimeMake(value: 1, timescale: 1)
+        )
+    }
     var isSliderVolumeMoving: Bool = false
     weak var delegate: PlayerManagerDelegate?
     
@@ -71,8 +77,13 @@ final class PlayerManager {
     
     private func startTimeObserve() {
         let interval = CMTime(seconds:1.0, preferredTimescale: Int32(NSEC_PER_SEC))
-        self.timeObserver = player.addPeriodicTimeObserver(forInterval: interval, queue: .main) { time in
-            print(time)
+        self.timeObserver = player.addPeriodicTimeObserver(forInterval: interval, queue: .main) { [weak self] time in
+            guard let self else {
+                return
+            }
+            let current = CMTimeGetSeconds(time)
+            let percentage = current / self.currentItemDuration
+            self.delegate?.playerTimeDidChange(Float(percentage))
         }
     }
     
