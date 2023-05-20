@@ -20,6 +20,7 @@ final class PlayerManager {
     private let player = AVPlayer()
     private let audioSession = AVAudioSession.sharedInstance()
     private var outputVolumeObserve: NSKeyValueObservation?
+    private var timeObserver: Any?
     var currentVolume: Float { audioSession.outputVolume }
     var isSliderVolumeMoving: Bool = false
     weak var delegate: PlayerManagerDelegate?
@@ -40,8 +41,10 @@ final class PlayerManager {
     func playOrPause() {
         if player.timeControlStatus == .paused {
             player.play()
+            startTimeObserve()
         } else {
             player.pause()
+            removeTimeObserve()
         }
     }
     
@@ -63,6 +66,20 @@ final class PlayerManager {
             }
             self.player.volume = audioSession.outputVolume
             self.delegate?.deviceVolumeButttonTapped()
+        }
+    }
+    
+    private func startTimeObserve() {
+        let interval = CMTime(seconds:1.0, preferredTimescale: Int32(NSEC_PER_SEC))
+        self.timeObserver = player.addPeriodicTimeObserver(forInterval: interval, queue: .main) { time in
+            print(time)
+        }
+    }
+    
+    private func removeTimeObserve() {
+        if let observer = self.timeObserver {
+            self.player.removeTimeObserver(observer)
+            self.timeObserver = nil
         }
     }
 }
