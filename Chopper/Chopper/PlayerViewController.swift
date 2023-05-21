@@ -57,13 +57,12 @@ final class PlayerViewController: UIViewController, PlayerManagerDelegate {
     
     private let sliderProgress: UISlider = {
         let slider = UISlider()
-        slider.setThumbImage(UIImage(), for: .normal)
         return slider
     }()
     
     private let labelCurrentTime: UILabel = {
         let label = UILabel()
-        label.text = "0:00"
+        label.text = "00:00"
         label.textColor = .lightText
         label.font = .systemFont(ofSize: 13)
         return label
@@ -71,7 +70,7 @@ final class PlayerViewController: UIViewController, PlayerManagerDelegate {
     
     private let labelTotalTime: UILabel = {
         let label = UILabel()
-        label.text = "0:00"
+        label.text = "00:00"
         label.textColor = .lightText
         label.font = .systemFont(ofSize: 13)
         return label
@@ -193,7 +192,8 @@ final class PlayerViewController: UIViewController, PlayerManagerDelegate {
         containerViewSliderProgress.addSubview(labelCurrentTime)
         containerViewSliderProgress.addSubview(labelTotalTime)
         sliderProgress.snp.makeConstraints { make in
-            make.top.leading.trailing.equalToSuperview()
+            make.top.equalToSuperview()
+            make.leading.trailing.equalToSuperview().inset(2)
         }
         labelCurrentTime.snp.makeConstraints { make in
             make.top.equalTo(sliderProgress.snp.bottom)
@@ -294,7 +294,9 @@ extension PlayerViewController {
 
 // MARK: - Time
 extension PlayerViewController {
-    func playerTimeDidChange(_ percentage: Float) {
-        sliderProgress.value = percentage
+    func playerTimeDidChange(percentage: Float64) {
+        sliderProgress.value = Float(percentage)
+        labelCurrentTime.text = PlayerManager.shared.currentItemTimeStr
+        labelTotalTime.text = PlayerManager.shared.currentItemDurationStr
     }
 }

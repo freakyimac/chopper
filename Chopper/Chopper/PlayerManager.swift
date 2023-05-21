@@ -11,7 +11,7 @@ import MediaPlayer
 
 protocol PlayerManagerDelegate: AnyObject {
     func deviceVolumeButttonTapped()
-    func playerTimeDidChange(_ percentage: Float)
+    func playerTimeDidChange(percentage: Float64)
 }
 
 final class PlayerManager {
@@ -27,6 +27,12 @@ final class PlayerManager {
         CMTimeGetSeconds(
             player.currentItem?.duration ?? CMTimeMake(value: 1, timescale: 1)
         )
+    }
+    var currentItemTimeStr: String {
+        return convertTimeToString(CMTimeGetSeconds(player.currentTime()))
+    }
+    var currentItemDurationStr: String {
+        return convertTimeToString(currentItemDuration)
     }
     var isSliderVolumeMoving: Bool = false
     weak var delegate: PlayerManagerDelegate?
@@ -83,7 +89,7 @@ final class PlayerManager {
             }
             let current = CMTimeGetSeconds(time)
             let percentage = current / self.currentItemDuration
-            self.delegate?.playerTimeDidChange(Float(percentage))
+            self.delegate?.playerTimeDidChange(percentage: percentage)
         }
     }
     
@@ -92,5 +98,13 @@ final class PlayerManager {
             self.player.removeTimeObserver(observer)
             self.timeObserver = nil
         }
+    }
+    
+    private func convertTimeToString(_ time: Float64) -> String {
+        let totalSeconds = Int(time)
+        let seconds = totalSeconds % 60
+        let minutes = totalSeconds / 60
+        let timeFormatString  = String(format: "%02d:%02d", minutes, seconds)
+        return timeFormatString
     }
 }
