@@ -55,8 +55,9 @@ final class PlayerViewController: UIViewController, PlayerManagerDelegate {
         return view
     }()
     
-    private let sliderProgress: UISlider = {
+    private lazy var sliderProgress: UISlider = {
         let slider = UISlider()
+        slider.addTarget(self, action: #selector(progressChange(sender:event:)), for: .valueChanged)
         return slider
     }()
     
@@ -126,7 +127,7 @@ final class PlayerViewController: UIViewController, PlayerManagerDelegate {
         slider.minimumValue = 0
         slider.maximumValue = 1
         slider.value = PlayerManager.shared.currentVolume
-        slider.addTarget(self, action: #selector(valueChangeSlider(sender:event:)), for: .valueChanged)
+        slider.addTarget(self, action: #selector(volumeChange(sender:event:)), for: .valueChanged)
         return slider
     }()
     
@@ -278,7 +279,7 @@ extension PlayerViewController {
         sliderVolume.setValue(PlayerManager.shared.currentVolume, animated: true)
     }
     
-    @objc private func valueChangeSlider(sender: UISlider, event: UIEvent) {
+    @objc private func volumeChange(sender: UISlider, event: UIEvent) {
         if let touchEvent = event.allTouches?.first {
             switch touchEvent.phase {
             case .began:
@@ -290,11 +291,29 @@ extension PlayerViewController {
             }
         }
     }
+    
+    @objc private func progressChange(sender: UISlider, event: UIEvent) {
+        if let touchEvent = event.allTouches?.first {
+            switch touchEvent.phase {
+            case .began, .moved:
+                PlayerManager.shared.isSliderProgressMoving = true
+            case .ended:
+                PlayerManager.shared.seekWithSlider(value: sender.value) { success in
+                    PlayerManager.shared.isSliderProgressMoving = false
+                }
+            default:
+                PlayerManager.shared.isSliderProgressMoving = false
+            }
+        }
+    }
 }
 
 // MARK: - Time
 extension PlayerViewController {
     func playerTimeDidChange(percentage: Float64) {
+        guard !PlayerManager.shared.isSliderProgressMoving else {
+            return
+        }
         sliderProgress.value = Float(percentage)
         labelCurrentTime.text = PlayerManager.shared.currentItemTimeStr
         labelTotalTime.text = PlayerManager.shared.currentItemDurationStr

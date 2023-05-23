@@ -18,6 +18,7 @@ final class PlayerManager {
     
     // MARK: - Properties
     static let shared = PlayerManager()
+    private let commonTimeOneSeconds = CMTimeMake(value: 1, timescale: 1)
     private let player = AVPlayer()
     private let audioSession = AVAudioSession.sharedInstance()
     private var outputVolumeObserve: NSKeyValueObservation?
@@ -25,7 +26,7 @@ final class PlayerManager {
     var currentVolume: Float { audioSession.outputVolume }
     var currentItemDuration: Float64 {
         CMTimeGetSeconds(
-            player.currentItem?.duration ?? CMTimeMake(value: 1, timescale: 1)
+            player.currentItem?.duration ?? commonTimeOneSeconds
         )
     }
     var currentItemTimeStr: String {
@@ -35,6 +36,7 @@ final class PlayerManager {
         return convertTimeToString(currentItemDuration)
     }
     var isSliderVolumeMoving: Bool = false
+    var isSliderProgressMoving: Bool = false
     weak var delegate: PlayerManagerDelegate?
     
     private init() {
@@ -64,6 +66,18 @@ final class PlayerManager {
         player.volume = value
         MPVolumeView.setVolume(value)
     }
+    
+    func seekWithSlider(value sliderPosition: Float, completion: @escaping (Bool) -> ()) {
+        guard !currentItemDuration.isNaN else {
+            completion(false)
+            return
+        }
+        let value = Float64(sliderPosition) * currentItemDuration
+        let seekTime = CMTime(value: CMTimeValue(value), timescale: 1)
+        player.seek(to: seekTime) { success in
+            completion(success)
+        }
+    }
 
     private func listenVolumeButton() {
         do {
@@ -82,8 +96,7 @@ final class PlayerManager {
     }
     
     private func startTimeObserve() {
-        let interval = CMTime(seconds:1.0, preferredTimescale: Int32(NSEC_PER_SEC))
-        self.timeObserver = player.addPeriodicTimeObserver(forInterval: interval, queue: .main) { [weak self] time in
+        self.timeObserver = player.addPeriodicTimeObserver(forInterval: commonTimeOneSeconds, queue: .main) { [weak self] time in
             guard let self else {
                 return
             }
