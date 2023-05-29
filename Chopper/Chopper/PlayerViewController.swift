@@ -295,8 +295,10 @@ extension PlayerViewController {
     @objc private func progressChange(sender: UISlider, event: UIEvent) {
         if let touchEvent = event.allTouches?.first {
             switch touchEvent.phase {
-            case .began, .moved:
+            case .began:
                 PlayerManager.shared.isSliderProgressMoving = true
+            case .moved:
+                labelCurrentTime.text = viewModel.convertTimeToString(PlayerManager.shared.currentItemDuration * Float64(sender.value))
             case .ended:
                 PlayerManager.shared.seekWithSlider(value: sender.value) { success in
                     PlayerManager.shared.isSliderProgressMoving = false
@@ -315,7 +317,7 @@ extension PlayerViewController {
             return
         }
         sliderProgress.value = Float(percentage)
-        labelCurrentTime.text = PlayerManager.shared.currentItemTimeStr
-        labelTotalTime.text = PlayerManager.shared.currentItemDurationStr
+        labelCurrentTime.text = viewModel.currentItemTimeStr
+        labelTotalTime.text = viewModel.currentItemDurationStr
     }
 }

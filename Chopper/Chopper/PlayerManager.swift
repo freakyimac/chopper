@@ -29,11 +29,8 @@ final class PlayerManager {
             player.currentItem?.duration ?? commonTimeOneSeconds
         )
     }
-    var currentItemTimeStr: String {
-        return convertTimeToString(CMTimeGetSeconds(player.currentTime()))
-    }
-    var currentItemDurationStr: String {
-        return convertTimeToString(currentItemDuration)
+    var currentTime: CMTime {
+        return player.currentTime()
     }
     var isSliderVolumeMoving: Bool = false
     var isSliderProgressMoving: Bool = false
@@ -111,13 +108,5 @@ final class PlayerManager {
             self.player.removeTimeObserver(observer)
             self.timeObserver = nil
         }
-    }
-    
-    private func convertTimeToString(_ time: Float64) -> String {
-        let totalSeconds = Int(time)
-        let seconds = totalSeconds % 60
-        let minutes = totalSeconds / 60
-        let timeFormatString  = String(format: "%02d:%02d", minutes, seconds)
-        return timeFormatString
     }
 }
