@@ -15,6 +15,8 @@
 		DF50B01329F6CB8D0021DF78 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DF50B01229F6CB8D0021DF78 /* Assets.xcassets */; };
 		DF50B01629F6CB8D0021DF78 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DF50B01429F6CB8D0021DF78 /* LaunchScreen.storyboard */; };
 		DF50B01F29F6CC8E0021DF78 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = DF50B01E29F6CC8E0021DF78 /* SnapKit */; };
+		DFB847882A2648D800C1A7F6 /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFB847872A2648D800C1A7F6 /* FeedViewController.swift */; };
+		DFB8478A2A26497F00C1A7F6 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFB847892A26497F00C1A7F6 /* TabBarViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,6 +29,8 @@
 		DF50B01229F6CB8D0021DF78 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DF50B01529F6CB8D0021DF78 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DF50B01729F6CB8D0021DF78 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DFB847872A2648D800C1A7F6 /* FeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
+		DFB847892A26497F00C1A7F6 /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,6 +73,8 @@
 			isa = PBXGroup;
 			children = (
 				DF50B00929F6CB8C0021DF78 /* AppDelegate.swift */,
+				DFB847892A26497F00C1A7F6 /* TabBarViewController.swift */,
+				DFB847872A2648D800C1A7F6 /* FeedViewController.swift */,
 				DF50B00D29F6CB8C0021DF78 /* PlayerViewController.swift */,
 				DF3D22F629FAC0AA005CF835 /* PlayerViewModel.swift */,
 				DF39D41B2A04B192003BF990 /* PlayerManager.swift */,
@@ -160,7 +166,9 @@
 				DF50B00E29F6CB8C0021DF78 /* PlayerViewController.swift in Sources */,
 				DF39D41C2A04B192003BF990 /* PlayerManager.swift in Sources */,
 				DF39D41E2A04B7D3003BF990 /* extension_MPVolumeView.swift in Sources */,
+				DFB8478A2A26497F00C1A7F6 /* TabBarViewController.swift in Sources */,
 				DF50B00A29F6CB8C0021DF78 /* AppDelegate.swift in Sources */,
+				DFB847882A2648D800C1A7F6 /* FeedViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
