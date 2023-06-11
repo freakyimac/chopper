@@ -10,6 +10,7 @@
 		DF39D41C2A04B192003BF990 /* PlayerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF39D41B2A04B192003BF990 /* PlayerManager.swift */; };
 		DF39D41E2A04B7D3003BF990 /* extension_MPVolumeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF39D41D2A04B7D3003BF990 /* extension_MPVolumeView.swift */; };
 		DF3D22F729FAC0AA005CF835 /* PlayerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF3D22F629FAC0AA005CF835 /* PlayerViewModel.swift */; };
+		DF4D36F92A3603280008BCE8 /* BannerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF4D36F82A3603280008BCE8 /* BannerCell.swift */; };
 		DF50B00A29F6CB8C0021DF78 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF50B00929F6CB8C0021DF78 /* AppDelegate.swift */; };
 		DF50B00E29F6CB8C0021DF78 /* PlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF50B00D29F6CB8C0021DF78 /* PlayerViewController.swift */; };
 		DF50B01329F6CB8D0021DF78 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DF50B01229F6CB8D0021DF78 /* Assets.xcassets */; };
@@ -23,6 +24,7 @@
 		DF39D41B2A04B192003BF990 /* PlayerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerManager.swift; sourceTree = "<group>"; };
 		DF39D41D2A04B7D3003BF990 /* extension_MPVolumeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = extension_MPVolumeView.swift; sourceTree = "<group>"; };
 		DF3D22F629FAC0AA005CF835 /* PlayerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerViewModel.swift; sourceTree = "<group>"; };
+		DF4D36F82A3603280008BCE8 /* BannerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerCell.swift; sourceTree = "<group>"; };
 		DF50B00629F6CB8C0021DF78 /* Chopper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Chopper.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DF50B00929F6CB8C0021DF78 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DF50B00D29F6CB8C0021DF78 /* PlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerViewController.swift; sourceTree = "<group>"; };
@@ -75,6 +77,7 @@
 				DF50B00929F6CB8C0021DF78 /* AppDelegate.swift */,
 				DFB847892A26497F00C1A7F6 /* TabBarViewController.swift */,
 				DFB847872A2648D800C1A7F6 /* FeedViewController.swift */,
+				DF4D36F82A3603280008BCE8 /* BannerCell.swift */,
 				DF50B00D29F6CB8C0021DF78 /* PlayerViewController.swift */,
 				DF3D22F629FAC0AA005CF835 /* PlayerViewModel.swift */,
 				DF39D41B2A04B192003BF990 /* PlayerManager.swift */,
@@ -163,6 +166,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DF3D22F729FAC0AA005CF835 /* PlayerViewModel.swift in Sources */,
+				DF4D36F92A3603280008BCE8 /* BannerCell.swift in Sources */,
 				DF50B00E29F6CB8C0021DF78 /* PlayerViewController.swift in Sources */,
 				DF39D41C2A04B192003BF990 /* PlayerManager.swift in Sources */,
 				DF39D41E2A04B7D3003BF990 /* extension_MPVolumeView.swift in Sources */,
