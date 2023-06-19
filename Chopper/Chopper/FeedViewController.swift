@@ -51,7 +51,7 @@ extension FeedViewController: UICollectionViewDataSource {
             case 0:
                 // item
                 let itemSize = NSCollectionLayoutSize(
-                    widthDimension: .fractionalWidth(0.5),
+                    widthDimension: .fractionalWidth(1),
                     heightDimension: .fractionalHeight(1.0)
                 )
                 let item = NSCollectionLayoutItem(layoutSize: itemSize)
@@ -65,7 +65,7 @@ extension FeedViewController: UICollectionViewDataSource {
                 let group = NSCollectionLayoutGroup.horizontal(
                     layoutSize: groupSize,
                     repeatingSubitem: item,
-                    count: 2
+                    count: 1
                 )
                 
                 // section
