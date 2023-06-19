@@ -77,7 +77,7 @@ extension FeedViewController: UICollectionViewDataSource {
                 // item
                 let itemSize = NSCollectionLayoutSize(
                     widthDimension: .fractionalWidth(1.0),
-                    heightDimension: .fractionalHeight(1.0)
+                    heightDimension: .fractionalHeight(1.0/4.0)
                 )
                 let item = NSCollectionLayoutItem(layoutSize: itemSize)
                 item.contentInsets = NSDirectionalEdgeInsets(top: 12, leading: 8, bottom: 12, trailing: 8)
@@ -85,11 +85,11 @@ extension FeedViewController: UICollectionViewDataSource {
                 // group
                 let groupSize = NSCollectionLayoutSize(
                     widthDimension: .fractionalWidth(0.9),
-                    heightDimension: .fractionalHeight(1.0/4.0)
+                    heightDimension: .fractionalHeight(0.3)
                 )
                 let group = NSCollectionLayoutGroup.vertical(
                     layoutSize: groupSize,
-                    subitem: item,
+                    repeatingSubitem: item,
                     count: 4
                 )
                 
