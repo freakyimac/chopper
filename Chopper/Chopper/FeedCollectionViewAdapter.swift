@@ -64,7 +64,13 @@ extension FeedCollectionViewAdapter: UICollectionViewDataSource {
                 // section
                 let section = NSCollectionLayoutSection(group: group)
                 section.orthogonalScrollingBehavior = .groupPagingCentered
-                
+                section.boundarySupplementaryItems = [
+                    NSCollectionLayoutBoundarySupplementaryItem(
+                        layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .absolute(50)),
+                        elementKind: UICollectionView.elementKindSectionHeader,
+                        alignment: .top
+                    )
+                ]
                 return section
             default:
                 // item
@@ -89,6 +95,13 @@ extension FeedCollectionViewAdapter: UICollectionViewDataSource {
                 // Section
                 let section = NSCollectionLayoutSection(group: group)
                 section.orthogonalScrollingBehavior = .groupPagingCentered
+                section.boundarySupplementaryItems = [
+                    NSCollectionLayoutBoundarySupplementaryItem(
+                        layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .absolute(50)),
+                        elementKind: UICollectionView.elementKindSectionHeader,
+                        alignment: .top
+                    )
+                ]
                 return section
             }
         }
@@ -106,6 +119,7 @@ extension FeedCollectionViewAdapter: UICollectionViewDataSource {
             return items.count
         }
     }
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: BannerCell.identifier, for: indexPath) as? BannerCell else {
             return .init()
@@ -117,6 +131,22 @@ extension FeedCollectionViewAdapter: UICollectionViewDataSource {
             cell.label.text = items[indexPath.item].value
         }
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        switch kind {
+        case UICollectionView.elementKindSectionHeader:
+            switch self.sections[indexPath.section] {
+            case .first:
+                let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "CommonReuseableView", for: indexPath)
+                return headerView
+            case .second:
+                let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "CommonReuseableView", for: indexPath)
+                return headerView
+            }
+        default:
+            return .init()
+        }
     }
 }
 

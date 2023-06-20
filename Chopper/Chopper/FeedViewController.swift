@@ -16,6 +16,7 @@ final class FeedViewController: UIViewController {
         view.delegate = self.adapter
         view.backgroundColor = .white
         view.register(BannerCell.self, forCellWithReuseIdentifier: "BannerCell")
+        view.register(CommonReuseableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "CommonReuseableView")
         return view
     }()
     
